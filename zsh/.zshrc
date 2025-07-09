@@ -180,3 +180,35 @@ op() {
   local dir
   dir=$(find "$user_dir" -mindepth 1 -maxdepth 1 -type d  ! -name '.*' | fzf) && cd "$dir"
 }
+
+# rsync tmux and nvim config 
+rsync_A100() {
+  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.112:~/.config/nvim/
+  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.112:~/.tmux.conf
+}
+
+rsync_H100() {
+  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.110:~/.config/nvim/
+  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.110:~/.tmux.conf
+}
+alias lzd='lazydocker'
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+
+
+## Thank bashbunny for pomodoro timer
+# Productivity corner
+declare -A pomo_options
+pomo_options["work"]="45"
+pomo_options["break"]="10"
+
+pomodoro () {
+  if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
+  val=$1
+  echo $val | lolcat
+  timer ${pomo_options["$val"]}m
+  spd-say "'$val' session done"
+  fi
+}
+
+alias work="pomodoro 'work'"
+alias br="pomodoro 'break'"

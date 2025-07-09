@@ -35,6 +35,10 @@ local plugins = {
 	require("plugins.toggleterm"),
 	require("plugins.repl"),
 	require("plugins.auto-session"),
+	require("plugins.markdown"),
+	require("plugins.luarocks"),
+	-- require("plugins.image"),
+	require("plugins.mini-surround"),
 }
 
 require("lazy").setup(plugins, opts)
