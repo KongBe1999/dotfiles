@@ -24,9 +24,9 @@ return {
 		-- 		return true
 		-- 	end
 		-- end,
-		auto_restore_last_session = true, -- Automatically restore last session on startup
+		auto_restore_last_session = false, -- Automatically restore last session on startup
 		pre_cwd_changed_cmds = {
-			"Neotree close",        -- Close Neotree before saving session
+			"Neotree close",         -- Close Neotree before saving session
 		},
 		post_cwd_changed_cmds = {
 			function()
