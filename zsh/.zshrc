@@ -194,21 +194,14 @@ rsync_H100() {
 alias lzd='lazydocker'
 export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
+# Doom emacs
+export PATH="$HOME/.config/emacs/bin:$PATH"
+alias emacs-client="emacsclient -c -a 'emacs'"
+alias emacs-daemon="emacs --daemon"
 
-## Thank bashbunny for pomodoro timer
-# Productivity corner
-declare -A pomo_options
-pomo_options["work"]="45"
-pomo_options["break"]="10"
-
-pomodoro () {
-  if [ -n "$1" -a -n "${pomo_options["$1"]}" ]; then
-  val=$1
-  echo $val | lolcat
-  timer ${pomo_options["$val"]}m
-  spd-say "'$val' session done"
-  fi
-}
-
-alias work="pomodoro 'work'"
-alias br="pomodoro 'break'"
+# Tmux alias
+alias t="tmux"
+alias ta="tmux attach -t"
+alias tn="tmux new -s"
+alias tl="tmux ls"
+alias tk="tmux kill-session -t"

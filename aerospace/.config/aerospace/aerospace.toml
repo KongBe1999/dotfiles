@@ -58,7 +58,7 @@ alt-s = 'workspace S' # Setting
 alt-t = 'workspace T' # Terminal
 alt-v = 'workspace V' # Edit Video
 alt-w = 'workspace W' # Work: Slack, ggmeet, discord,...
-alt-x = 'workspace X' # VM - enjoy
+# alt-x = 'workspace X' # VM - enjoy
 
 alt-shift-a = 'move-node-to-workspace A'
 alt-shift-b = 'move-node-to-workspace B'
@@ -73,7 +73,7 @@ alt-shift-s = 'move-node-to-workspace S'
 alt-shift-t = 'move-node-to-workspace T'
 alt-shift-v = 'move-node-to-workspace V'
 alt-shift-w = 'move-node-to-workspace W'
-alt-shift-x = 'move-node-to-workspace X'
+# alt-shift-x = 'move-node-to-workspace X'
 
 alt-shift-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
