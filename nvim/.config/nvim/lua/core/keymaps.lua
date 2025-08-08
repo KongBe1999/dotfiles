@@ -78,3 +78,15 @@ vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist, { desc = "Open diag
 -- Move selected lines up and down
 vim.keymap.set("v", "<S-j>", ":m '>+1<CR>gv=gv", opts)
 vim.keymap.set("v", "<S-k>", ":m '<-2<CR>gv=gv", opts)
+
+-- Molten keymaps
+vim.keymap.set("n", "<localleader>ip", function()
+	local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+	if venv ~= nil then
+		-- in the form of /home/benlubas/.virtualenvs/VENV_NAME
+		venv = string.match(venv, "/.+/(.+)")
+		vim.cmd(("MoltenInit %s"):format(venv))
+	else
+		vim.cmd("MoltenInit python3")
+	end
+end, { desc = "Initialize Molten for python3", silent = true })

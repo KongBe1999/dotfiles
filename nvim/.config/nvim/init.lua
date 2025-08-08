@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {}
 local plugins = {
-	require("plugins.colorthemes"),
+	require("themes.catppuccin"),
 	require("plugins.neotree"),
 	require("plugins.bufferline"),
 	require("plugins.lualine"),
@@ -35,10 +35,11 @@ local plugins = {
 	require("plugins.toggleterm"),
 	require("plugins.repl"),
 	require("plugins.auto-session"),
-	require("plugins.markdown"),
 	require("plugins.luarocks"),
-	-- require("plugins.image"),
+	require("plugins.image"),
 	require("plugins.mini-surround"),
+	-- require("plugins.molten"),
+	-- require("plugins.jupytext"),
 }
 
 require("lazy").setup(plugins, opts)

@@ -144,7 +144,8 @@ unset __conda_setup
 source <(fzf --zsh)
 alias f=fzf
 # preview with bat
-alias fp='fzf --preview="bat --color=always {}"'
+alias fp='fzf --multi --preview="bat --color=always {}"'
+# alias fm='fzf --multi --preview="bat --color=always {}"'
 # open neovim with select file by tab
 alias fv='nvim $(fzf -m --preview="bat --color=always {}")'
 
@@ -152,7 +153,6 @@ alias fv='nvim $(fzf -m --preview="bat --color=always {}")'
 alias v=nvim
 alias vim=nvim
 alias nv=nvim
-alias ovim=vim
 alias os='nvim ~/.zshrc'
 alias ss='source ~/.zshrc'
 alias k='kubectl'
@@ -181,18 +181,12 @@ op() {
   dir=$(find "$user_dir" -mindepth 1 -maxdepth 1 -type d  ! -name '.*' | fzf) && cd "$dir"
 }
 
-# rsync tmux and nvim config 
-rsync_A100() {
-  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.112:~/.config/nvim/
-  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.112:~/.tmux.conf
-}
-
 rsync_H100() {
   rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.110:~/.config/nvim/
   rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.110:~/.tmux.conf
+  # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic_speech@10.110.84.110:~/.zshrc
 }
 alias lzd='lazydocker'
-export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
 
 # Doom emacs
 export PATH="$HOME/.config/emacs/bin:$PATH"
@@ -205,3 +199,23 @@ alias ta="tmux attach -t"
 alias tn="tmux new -s"
 alias tl="tmux ls"
 alias tk="tmux kill-session -t"
+
+# macOS specific settings
+export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+# imagemagick
+export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+
+# Some key bindings to manipulate the terminal
+bindkey "^B" backward-word
+bindkey -r "^F"
+bindkey "^F" forward-word
+bindkey -r "^V"
+bindkey "^V" forward-char
+bindkey -r "^D"
+bindkey "^D" kill-word
+bindkey -r "^K"
+bindkey -r "^U"
+bindkey "^O" kill-line
+bindkey "^U" backward-kill-line
+# Bind Ctrl-Z to search directory
+bindkey "^Z" fzf-cd-widget
