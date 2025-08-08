@@ -16,10 +16,33 @@ return {
 		},
 	},
 	{
+		"saghen/blink.cmp",
+		version = "v1.*",
+		fuzzy = { implementation = "prefer_rust_with_warning" },
+	},
+	{
 		"neovim/nvim-lspconfig",
+		dependencies = { "saghen/blink.cmp" },
 		lazy = false,
 		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			-- Setup blink cmp for orgmode
+			require("blink.cmp").setup({
+				sources = {
+					per_filetype = {
+						org = { "orgmode" },
+					},
+					providers = {
+						orgmode = {
+							name = "Orgmode",
+							module = "orgmode.org.autocompletion.blink",
+							fallbacks = { "buffer" },
+						},
+					},
+				},
+			})
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 			-- lua
 			lspconfig.lua_ls.setup({

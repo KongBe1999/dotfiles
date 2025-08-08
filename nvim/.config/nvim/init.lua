@@ -38,6 +38,7 @@ local plugins = {
 	require("plugins.luarocks"),
 	require("plugins.image"),
 	require("plugins.mini-surround"),
+	require("plugins.orgmode.orgmode-init"),
 	-- require("plugins.molten"),
 	-- require("plugins.jupytext"),
 }
