@@ -21,14 +21,14 @@ vim.api.nvim_create_autocmd("User", {
 return {
 	{
 		"okuuva/auto-save.nvim",
-		cmd = "ASToggle", -- optional for lazy loading on command
+		cmd = "ASToggle",                   -- optional for lazy loading on command
 		event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
 		opts = {
 			--
 			-- All of these are just the defaults
 			--
-			enabled = true, -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
-			trigger_events = { -- See :h events
+			enabled = true,                        -- start auto-save when the plugin is loaded (i.e. when your package manager loads it)
+			trigger_events = {                     -- See :h events
 				immediate_save = { "BufLeave", "FocusLost" }, -- vim events that trigger an immediate save
 				defer_save = { "InsertLeave", "TextChanged" }, -- vim events that trigger a deferred save (saves after `debounce_delay`)
 				cancel_deferred_save = { "InsertEnter" }, -- vim events that cancel a pending deferred save

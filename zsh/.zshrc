@@ -181,10 +181,14 @@ op() {
   dir=$(find "$user_dir" -mindepth 1 -maxdepth 1 -type d  ! -name '.*' | fzf) && cd "$dir"
 }
 
+# rsync some folders to remote server
 rsync_H100() {
   rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.110:~/.config/nvim/
   rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.110:~/.tmux.conf
   # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic_speech@10.110.84.110:~/.zshrc
+}
+rsync_orgfiles(){
+  rsync -avzhe ssh ~/Documents/orgfiles/ aic_speech@
 }
 alias lzd='lazydocker'
 
@@ -219,3 +223,8 @@ bindkey "^O" kill-line
 bindkey "^U" backward-kill-line
 # Bind Ctrl-Z to search directory
 bindkey "^Z" fzf-cd-widget
+
+# Neostrech
+if [ -z $TMUX ] && [ -n "$PS1" ] && command -v neofetch >/dev/null 2>&1; then
+  neofetch
+fi
