@@ -141,6 +141,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 # fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
 alias f=fzf
 # preview with bat
@@ -161,7 +162,7 @@ alias stm='tmux source-file ~/.tmux.conf \;'
 # confirm before remove something... fk.
 alias rm="rm -i"
 # PATH
-alias vcf="cd ~/.config/nvim && nvim"
+alias vcf="v ~/.config/nvim"
 alias python=python3
 alias dc=docker-compose
 # fetch then allow to fuzzy finding branches
@@ -183,12 +184,12 @@ op() {
 
 # rsync some folders to remote server
 rsync_H100() {
-  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic_speech@10.110.84.110:~/.config/nvim/
-  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic_speech@10.110.84.110:~/.tmux.conf
-  # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic_speech@10.110.84.110:~/.zshrc
+  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic-speech@10.110.84.110:~/.config/nvim/
+  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic-speech@10.110.84.110:~/.tmux.conf
+  # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic-speech@10.110.84.110:~/.zshrc
 }
 rsync_orgfiles(){
-  rsync -avzhe ssh ~/Documents/orgfiles/ aic_speech@
+  rsync -avzhe ssh ~/Documents/orgfiles/ aic-speech@
 }
 alias lzd='lazydocker'
 
@@ -211,10 +212,10 @@ export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_P
 
 # Some key bindings to manipulate the terminal
 bindkey "^B" backward-word
+bindkey -r "^N"
+bindkey "^N" forward-word
 bindkey -r "^F"
-bindkey "^F" forward-word
-bindkey -r "^V"
-bindkey "^V" forward-char
+bindkey "^F" forward-char
 bindkey -r "^D"
 bindkey "^D" kill-word
 bindkey -r "^K"
@@ -228,3 +229,25 @@ bindkey "^Z" fzf-cd-widget
 if [ -z $TMUX ] && [ -n "$PS1" ] && command -v neofetch >/dev/null 2>&1; then
   neofetch
 fi
+
+# Port fowarding
+function pf() {
+  ssh -N -f -L "$1":localhost:"$1" aic-speech@10.110.84.110
+}
+
+# kube alias
+alias kctx='kubectx'
+alias kns='kubens'
+alias k='kubectl'
+
+# yazi 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+# zoxide
+eval "$(zoxide init zsh)"

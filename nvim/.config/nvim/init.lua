@@ -35,10 +35,11 @@ local plugins = {
 	require("plugins.toggleterm"),
 	require("plugins.repl"),
 	require("plugins.auto-session"),
-	require("plugins.luarocks"),
-	require("plugins.image"),
+	-- require("plugins.luarocks"),
+	-- require("plugins.image"),
 	require("plugins.mini-surround"),
 	require("plugins.orgmode.orgmode-init"),
+	require("plugins.remote-nvim"),
 	-- require("plugins.molten"),
 	-- require("plugins.jupytext"),
 }

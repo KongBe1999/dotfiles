@@ -149,7 +149,6 @@ run = "move-node-to-workspace N"
 if.app-id = 'md.obsidian'
 run = "move-node-to-workspace N"
 
-
 [[on-window-detected]]
 if.app-id = 'org.godotengine.godot'
 run = 'move-node-to-workspace G'
@@ -167,6 +166,7 @@ run = "move-node-to-workspace M"
 W = 'main' 
 C = 'main' 
 S = 'main'
+M = 'secondary'
 D = 'secondary'
 B = 'secondary'
 

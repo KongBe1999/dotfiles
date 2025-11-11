@@ -56,7 +56,7 @@ return {
 		event = "VeryLazy",
 		opts = {
 			size = 10,
-			open_mapping = [[<C-m>]],
+			open_mapping = [[<C-]>]],
 			hide_numbers = true,
 			autochdir = true,
 			shade_filetypes = {},
