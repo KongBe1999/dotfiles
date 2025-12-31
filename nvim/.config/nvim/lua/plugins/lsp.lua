@@ -43,9 +43,8 @@ return {
 			local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			local lspconfig = require("lspconfig")
 			-- lua
-			lspconfig.lua_ls.setup({
+			vim.lsp.config('lua_ls', {
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -62,36 +61,33 @@ return {
 					},
 				},
 			})
+			vim.lsp.enable("lua_ls")
 			-- typescript
-			lspconfig.ts_ls.setup({
+			vim.lsp.config('ts_ls', {
 				capabilities = capabilities,
 			})
+			vim.lsp.enable("ts_ls")
 			-- Js
-			lspconfig.eslint.setup({
+			vim.lsp.config('js_ls', {
 				capabilities = capabilities,
 			})
-			-- zig
-			lspconfig.zls.setup({
-				capabilities = capabilities,
-			})
+			vim.lsp.enable("js_ls")
 			-- yaml
-			lspconfig.yamlls.setup({
+			vim.lsp.config('yamlls', {
 				capabilities = capabilities,
 			})
-			-- tailwindcss
-			lspconfig.tailwindcss.setup({
-				capabilities = capabilities,
-			})
+			vim.lsp.enable("yamlls")
 			-- golang
-			lspconfig.gopls.setup({
+			vim.lsp.config('golsp', {
 				capabilities = capabilities,
 			})
+			vim.lsp.enable("golsp")
 			-- protocol buffer
-			lspconfig.buf_ls.setup({ capabilities = capabilities })
+			vim.lsp.config('buf_ls', { capabilities = capabilities })
+			vim.lsp.enable("buf_ls")
 			-- docker compose
-			lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
-			-- svelte
-			lspconfig.svelte.setup({ capabilities = capabilities })
+			vim.lsp.config('docker_compose_language_service', { capabilities = capabilities })
+			vim.lsp.enable("buf_ls")
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = "proto",
 				callback = function()
@@ -101,7 +97,8 @@ return {
 				end,
 			})
 			-- python
-			lspconfig.pylsp.setup({ capabilities = capabilities })
+			vim.lsp.config('pylsp', { capabilities = capabilities })
+			vim.lsp.enable('pylsp')
 			-- lspconfig.pyright.setup({ capabilities = capabilities })
 			-- lsp kepmap setting
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

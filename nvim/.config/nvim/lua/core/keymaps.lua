@@ -37,13 +37,13 @@ vim.keymap.set("n", "<Right>", ":vertical resize -2<CR>", opts)
 -- Buffers
 vim.keymap.set("n", "<c-n>", ":bnext<CR>", opts)
 vim.keymap.set("n", "<c-p>", ":bprevious<CR>", opts)
-vim.keymap.set("n", "<c-c>", ":bdelete!<cr>", opts)   -- close buffer
+vim.keymap.set("n", "<c-c>", ":bdelete!<cr>", opts) -- close buffer
 vim.keymap.set("n", "<c-t>", "<cmd> enew <cr>", opts) -- new buffer
 
 -- Window management
-vim.keymap.set("n", "<leader>\\", "<C-w>v", opts)     -- split window vertically
-vim.keymap.set("n", "<leader>-", "<C-w>s", opts)      -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=", opts)     -- make split windows equal width & height
+vim.keymap.set("n", "<leader>\\", "<C-w>v", opts) -- split window vertically
+vim.keymap.set("n", "<leader>-", "<C-w>s", opts) -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=", opts) -- make split windows equal width & height
 vim.keymap.set("n", "<leader>xs", ":close<CR>", opts) -- close current split window
 
 -- Navigate between splits
@@ -53,10 +53,10 @@ vim.keymap.set("n", "<C-h>", ":wincmd h<CR>", opts)
 vim.keymap.set("n", "<C-l>", ":wincmd l<CR>", opts)
 
 -- Tabs
-vim.keymap.set("n", "<leader>to", ":tabnew<CR>", opts)   -- open new tab
+vim.keymap.set("n", "<leader>to", ":tabnew<CR>", opts) -- open new tab
 vim.keymap.set("n", "<leader>tx", ":tabclose<CR>", opts) -- close current tab
-vim.keymap.set("n", "<leader>tn", ":tabn<CR>", opts)     --  go to next tab
-vim.keymap.set("n", "<leader>tp", ":tabp<CR>", opts)     --  go to previous tab
+vim.keymap.set("n", "<leader>tn", ":tabn<CR>", opts) --  go to next tab
+vim.keymap.set("n", "<leader>tp", ":tabp<CR>", opts) --  go to previous tab
 
 -- Toggle line wrapping
 vim.keymap.set("n", "<leader>lw", "<cmd>set wrap!<CR>", opts)
@@ -90,3 +90,8 @@ vim.keymap.set("n", "<localleader>ip", function()
 		vim.cmd("MoltenInit python3")
 	end
 end, { desc = "Initialize Molten for python3", silent = true })
+
+-- Lua keymaps
+vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source current lua file", silent = true })
+vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Run single lua line", silent = true })
+vim.keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Run selection lua lines", silent = true })

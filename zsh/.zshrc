@@ -186,6 +186,7 @@ op() {
 rsync_H100() {
   rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic-speech@10.110.84.110:~/.config/nvim/
   rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic-speech@10.110.84.110:~/.tmux.conf
+  rsync -avzhe ssh ~/dotfiles/yazi/.config/yazi/ aic-speech@10.110.84.110:~/.config/yazi/
   # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic-speech@10.110.84.110:~/.zshrc
 }
 rsync_orgfiles(){
@@ -251,3 +252,10 @@ function y() {
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+
+# export OPENCODE config
+export OPENCODE_CONFIG="~/.config/opencode/opencode.json"
+
+# alias Copilot CLI
+alias co="copilot"

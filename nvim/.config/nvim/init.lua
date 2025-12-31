@@ -39,7 +39,9 @@ local plugins = {
 	-- require("plugins.image"),
 	require("plugins.mini-surround"),
 	require("plugins.orgmode.orgmode-init"),
-	require("plugins.remote-nvim"),
+	-- require("plugins.remote-nvim"),
+	require("plugins.zenmode"),
+	require("plugins.opencode"),
 	-- require("plugins.molten"),
 	-- require("plugins.jupytext"),
 }
