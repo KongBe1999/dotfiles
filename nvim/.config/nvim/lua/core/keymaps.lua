@@ -96,17 +96,17 @@ vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>", { desc = "Source c
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Run single lua line", silent = true })
 vim.keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Run selection lua lines", silent = true })
 
--- OSC 52
-vim.g.clipboard = {
-	name = "OSC 52",
-	copy = {
-		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-	},
-	paste = {
-		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-	},
-}
+---- OSC 52
+--vim.g.clipboard = {
+--	name = "OSC 52",
+--	copy = {
+--		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+--		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+--	},
+--	paste = {
+--		["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+--		["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+--	},
+--}
 
 vim.keymap.set("v", "<c-c>", '"+y')
