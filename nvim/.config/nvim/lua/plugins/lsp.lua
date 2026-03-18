@@ -12,7 +12,7 @@ return {
 		opts = {
 			auto_install = true,
 			-- manually install packages that do not exist in this list please
-			ensure_installed = { "lua_ls", "zls", "ts_ls", "pylsp" },
+			ensure_installed = { "lua_ls", "zls", "pylsp" },
 		},
 	},
 	{
@@ -44,7 +44,7 @@ return {
 
 			-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			-- lua
-			vim.lsp.config('lua_ls', {
+			vim.lsp.config("lua_ls", {
 				capabilities = capabilities,
 				settings = {
 					Lua = {
@@ -63,30 +63,30 @@ return {
 			})
 			vim.lsp.enable("lua_ls")
 			-- typescript
-			vim.lsp.config('ts_ls', {
+			vim.lsp.config("ts_ls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("ts_ls")
 			-- Js
-			vim.lsp.config('js_ls', {
+			vim.lsp.config("js_ls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("js_ls")
 			-- yaml
-			vim.lsp.config('yamlls', {
+			vim.lsp.config("yamlls", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("yamlls")
 			-- golang
-			vim.lsp.config('golsp', {
+			vim.lsp.config("golsp", {
 				capabilities = capabilities,
 			})
 			vim.lsp.enable("golsp")
 			-- protocol buffer
-			vim.lsp.config('buf_ls', { capabilities = capabilities })
+			vim.lsp.config("buf_ls", { capabilities = capabilities })
 			vim.lsp.enable("buf_ls")
 			-- docker compose
-			vim.lsp.config('docker_compose_language_service', { capabilities = capabilities })
+			vim.lsp.config("docker_compose_language_service", { capabilities = capabilities })
 			vim.lsp.enable("buf_ls")
 			vim.api.nvim_create_autocmd("FileType", {
 				pattern = "proto",
@@ -97,8 +97,8 @@ return {
 				end,
 			})
 			-- python
-			vim.lsp.config('pylsp', { capabilities = capabilities })
-			vim.lsp.enable('pylsp')
+			vim.lsp.config("pylsp", { capabilities = capabilities })
+			vim.lsp.enable("pylsp")
 			-- lspconfig.pyright.setup({ capabilities = capabilities })
 			-- lsp kepmap setting
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
