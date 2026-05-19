@@ -42,6 +42,11 @@ local plugins = {
 	-- require("plugins.remote-nvim"),
 	require("plugins.zenmode"),
 	require("plugins.opencode"),
+	require("plugins.markview"),
+	require("plugins.csvview"),
+	require("plugins.neogit"),
+	require("plugins.markdown-preview"),
+	-- require("plugins.mermaid"),
 	-- require("plugins.molten"),
 	-- require("plugins.jupytext"),
 }
