@@ -92,11 +92,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
@@ -116,6 +116,9 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="/home/congnx3/.local/bin:$PATH"
+
 # Alias for docker compose 
 alias dc="docker-compose"
 
@@ -124,21 +127,6 @@ enter (){docker exec -it $1 bash;}
 
 # Add protoc-gen... into PATH for executing
 export PATH=$PATH:$HOME/go/bin
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/congnx/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/congnx/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/congnx/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/congnx/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -155,7 +143,7 @@ alias v=nvim
 alias vim=nvim
 alias nv=nvim
 alias os='nvim ~/.zshrc'
-alias ss='source ~/.zshrc'
+alias szsh='source ~/.zshrc'
 alias k='kubectl'
 # source tmux
 alias stm='tmux source-file ~/.tmux.conf \;'
@@ -183,15 +171,6 @@ op() {
 }
 
 # rsync some folders to remote server
-rsync_H100() {
-  rsync -avzhe ssh ~/dotfiles/nvim/.config/nvim/ aic-speech@10.110.84.110:~/.config/nvim/
-  rsync -avzhe ssh ~/dotfiles/tmux/.tmux.conf aic-speech@10.110.84.110:~/.tmux.conf
-  rsync -avzhe ssh ~/dotfiles/yazi/.config/yazi/ aic-speech@10.110.84.110:~/.config/yazi/
-  # rsync -avzhe ssh ~/dotfiles/zsh/.zshrc aic-speech@10.110.84.110:~/.zshrc
-}
-rsync_orgfiles(){
-  rsync -avzhe ssh ~/Documents/orgfiles/ aic-speech@
-}
 alias lzd='lazydocker'
 
 # Doom emacs
@@ -206,10 +185,6 @@ alias tn="tmux new -s"
 alias tl="tmux ls"
 alias tk="tmux kill-session -t"
 
-# macOS specific settings
-export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
-# imagemagick
-export DYLD_FALLBACK_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_FALLBACK_LIBRARY_PATH"
 
 # Some key bindings to manipulate the terminal
 bindkey "^B" backward-word
@@ -250,8 +225,6 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# zoxide
-eval "$(zoxide init zsh)"
 
 
 # export OPENCODE config
@@ -259,3 +232,143 @@ export OPENCODE_CONFIG="~/.config/opencode/opencode.json"
 
 # alias Copilot CLI
 alias co="copilot"
+
+
+# opencode
+export PATH=/home/congnx3/.opencode/bin:$PATH
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/congnx3/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/congnx3/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/congnx3/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/congnx3/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# zoxide 
+eval "$(zoxide init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# basepod A100 congnx3
+export SSHPASS="1"
+
+# alias web search
+w() {
+  local query
+  query=$(printf '%s' "$*" | sed 's/ /+/g')
+  w3m "https://html.duckduckgo.com/html/?q=$query"
+}
+
+# function to search web with w3m
+search_web() {
+  local session="search"
+  local query
+  query=$(printf '%s' "$*" | sed 's/ /+/g')
+  local cmd="w3m 'https://html.duckduckgo.com/html/?q=$query'" 
+
+  if tmux has-session -t "$session" 2>/dev/null; then
+    tmux send-keys -t "$session" "$cmd" C-m
+    tmux attach-session -t "$session"
+  else
+    tmux new-session -s "$session" "$cmd"
+  fi
+}
+
+# function to ask LLM through farbic
+ask_llm() {
+  local query=""
+  local args=()
+  local cmd=(fabric -s)
+
+  # Case 1: no argument
+  if [ $# -eq 0 ]; then
+    if [ -t 0 ]; then
+      cat <<'EOF'
+Usage:
+  ask_llm "query text" -- [fabric options...]
+  echo "query text" | ask_llm -- [fabric options...]
+
+Examples:
+  # Ask a simple question
+  ask_llm "Explain OAuth in Vietnamese"
+
+  # Ask with a Fabric pattern
+  ask_llm "Explain OAuth vs API key" -- -p explain
+
+  # Summarize text from stdin
+  echo "OAuth is an authorization framework..." | ask_llm -- -p summarize
+
+  # Summarize a file
+  cat notes.txt | ask_llm -- -p summarize
+
+  # Analyze git diff
+  git diff | ask_llm -- -p analyze_changes
+
+  # Improve selected text from Neovim
+  # Visual mode -> select text -> then run:
+  # :'<,'>!ask_llm -- -p improve_writing
+
+Notes:
+  --       separates your query from Fabric options.
+  -p       selects a Fabric pattern.
+  -s       is already enabled by default in this function.
+EOF
+      return 1
+    else
+      # stdin exists, no extra fabric args
+      "${cmd[@]}"
+      return $?
+    fi
+  fi
+
+  # Case 2: first argument is --
+  # Example:
+  #   cat notes.txt | ask_llm -- -p summarize
+  if [ "$1" = "--" ]; then
+    shift
+    args=("$@")
+
+    "${cmd[@]}" "${args[@]}"
+    return $?
+  fi
+
+  # Case 3: first argument is query text
+  # Example:
+  #   ask_llm "Explain OAuth" -- -p explain
+  query="$1"
+  shift
+
+  # Remove optional separator --
+  if [ "${1:-}" = "--" ]; then
+    shift
+  fi
+
+  args=("$@")
+
+  printf "%s\n" "$query" | "${cmd[@]}" "${args[@]}"
+  return $?
+}
+
+
+
+alias "?"="search_web"
+alias "??"="ask_llm"
+
+# Fabric set up
+# Golang environment variables
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+
+# Update PATH to include GOPATH and GOROOT binaries
+export PATH=$GOPATH/bin:$GOROOT/bin:$HOME/.local/bin:$PATH
