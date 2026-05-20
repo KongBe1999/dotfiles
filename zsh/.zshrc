@@ -142,7 +142,7 @@ alias fv='nvim $(fzf -m --preview="bat --color=always {}")'
 alias v=nvim
 alias vim=nvim
 alias nv=nvim
-alias os='nvim ~/.zshrc'
+alias ozsh='nvim ~/.zshrc'
 alias szsh='source ~/.zshrc'
 alias k='kubectl'
 # source tmux
@@ -275,14 +275,8 @@ search_web() {
   local session="search"
   local query
   query=$(printf '%s' "$*" | sed 's/ /+/g')
-  local cmd="w3m 'https://html.duckduckgo.com/html/?q=$query'" 
+  w3m 'https://html.duckduckgo.com/html/?q=$query'
 
-  if tmux has-session -t "$session" 2>/dev/null; then
-    tmux send-keys -t "$session" "$cmd" C-m
-    tmux attach-session -t "$session"
-  else
-    tmux new-session -s "$session" "$cmd"
-  fi
 }
 
 # function to ask LLM through farbic
