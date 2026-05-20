@@ -1,56 +1,82 @@
-return { -- Highlight, edit, and navigate code
+local parsers = {
+	"bash",
+	"cmake",
+	"css",
+	"dockerfile",
+	"gitignore",
+	"graphql",
+	"groovy",
+	"html",
+	"java",
+	"javascript",
+	"json",
+	"lua",
+	"make",
+	"markdown",
+	"markdown_inline",
+	"proto",
+	"python",
+	"query",
+	"regex",
+	"sql",
+	"terraform",
+	"toml",
+	"tsx",
+	"typescript",
+	"vim",
+	"vimdoc",
+	"yaml",
+}
+
+local filetypes = {
+	"bash",
+	"cmake",
+	"css",
+	"dockerfile",
+	"gitignore",
+	"graphql",
+	"groovy",
+	"html",
+	"java",
+	"javascript",
+	"json",
+	"lua",
+	"make",
+	"markdown",
+	"proto",
+	"python",
+	"query",
+	"regex",
+	"sh",
+	"sql",
+	"terraform",
+	"tf",
+	"toml",
+	"tsx",
+	"typescript",
+	"typescriptreact",
+	"vim",
+	"vimdoc",
+	"yaml",
+}
+
+return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	lazy = false,
 	build = ":TSUpdate",
-	main = "nvim-treesitter.config", -- Sets main module to use for opts
-	tag = "v0.9.0",
-	-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-	opts = {
-		ensure_installed = {
-			"proto",
-			"lua",
-			"python",
-			"javascript",
-			"typescript",
-			"vimdoc",
-			"vim",
-			"regex",
-			"terraform",
-			"sql",
-			"dockerfile",
-			"toml",
-			"json",
-			"java",
-			"groovy",
-			"go",
-			"gitignore",
-			"graphql",
-			"yaml",
-			"make",
-			"cmake",
-			"markdown",
-			"markdown_inline",
-			"bash",
-			"tsx",
-			"css",
-			"html",
-		},
-		ignore_install = { "go" },
-		-- Autoinstall languages that are not installed
-		auto_install = true,
-		-- sync_install = false,
-		highlight = {
-			enable = true,
-			-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-			--  If you are experiencing weird indenting issues, add the language to
-			--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-			additional_vim_regex_highlighting = { "ruby" },
-		},
-		indent = { enable = false, disable = { "ruby" } },
-	},
-	-- There are additional nvim-treesitter modules that you can use to interact
-	-- with nvim-treesitter. You should go explore a few and see what interests you:
-	--
-	--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-	--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-	--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+	config = function()
+		local treesitter = require("nvim-treesitter")
+
+		treesitter.setup()
+		treesitter.install(parsers, { max_jobs = 4 })
+
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("UserTreesitter", { clear = true }),
+			pattern = filetypes,
+			callback = function()
+				pcall(vim.treesitter.start)
+			end,
+		})
+	end,
 }

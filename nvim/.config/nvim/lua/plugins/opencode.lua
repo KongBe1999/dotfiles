@@ -49,10 +49,17 @@ return {
 			require("opencode").command("session.half.page.down")
 		end, { desc = "opencode half page down" })
 
-		-- Map ESC in terminal mode to close OpenCode instead of exiting to normal mode
-		-- Disable ESC from exiting terminal-mode and entering normal mode
-		-- ESC does nothing in all terminal buffers
-		vim.keymap.set("t", "<Esc>", "<Nop>", { desc = "Disable ESC in terminal mode" })
+		-- Keep ESC inert in regular terminals, but let the OpenCode TUI receive it.
+		vim.keymap.set("t", "<Esc>", function()
+			if not vim.api.nvim_buf_get_name(0):match("opencode") then
+				return
+			end
+
+			local job_id = vim.b.terminal_job_id
+			if job_id then
+				vim.api.nvim_chan_send(job_id, "\27")
+			end
+		end, { desc = "Handle ESC in terminal mode" })
 
 		-- You may want these if you stick with the opinionated "<C-a>" and "<C-x>" above — otherwise consider "<leader>o".
 		vim.keymap.set("n", "+", "<C-a>", { desc = "Increment", noremap = true })

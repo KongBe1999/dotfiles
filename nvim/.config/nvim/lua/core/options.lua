@@ -38,6 +38,7 @@ vim.o.completeopt = "menuone,noselect" -- Set completeopt to have a better compl
 vim.opt.shortmess:append("c") -- Don't give |ins-completion-menu| messages (default: does not include 'c')
 vim.opt.iskeyword:append("-") -- Hyphenated words recognized by searches (default: does not include '-')
 vim.opt.formatoptions:remove({ "c", "r", "o" }) -- Don't insert the current comment leader automatically for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode. (default: 'croql')
+vim.opt.termguicolors = true
 vim.g.autosave_enabled = true
 --vim.g.autosave_disable_inside_paths = { vim.fn.stdpath("config") }
 vim.g.python3_host_prog = vim.fn.expand("~/.virtualenvs/neovim/bin/python3")
